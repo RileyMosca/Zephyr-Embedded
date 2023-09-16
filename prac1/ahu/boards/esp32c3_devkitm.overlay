@@ -1,0 +1,39 @@
+#include <espressif/esp32c3.dtsi>
+#include <zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h>
+#include <dt-bindings/pinctrl/esp32c3-pinctrl.h>
+#include <zephyr/dt-bindings/pinctrl/esp32c3-gpio-sigmap.h>
+
+/ {
+    model = "esp32c3_devkitm";
+	compatible = "espressif,esp32c3";
+
+    chosen {
+        zephyr,uart1 = &uart1;
+    };
+
+    aliases {
+        serial = &uart1;
+    };
+};
+
+&uart0 {
+    status ="okay";
+};
+
+&uart1 {
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart1_tx &uart1_rx>;
+    pinctrl-names = "default";
+};
+
+&pinctrl {
+    uart1_tx: uart1_tx {
+        pinmux = <UART1_TX_GPIO3>;
+    };
+
+    uart1_rx: uart1_rx {
+        pinmux = <UART1_RX_GPIO2>;
+        bias-pull-up;
+    };
+};
